@@ -1,24 +1,24 @@
 class Resultado:
     def __init__(self, descricao, nome, codigo):
-        self.nome = nome
-        self.descricao = descricao
-        self.codigo = None
+        self._nome = nome
+        self._descricao = descricao
+        self._codigo = None
 
     def get_nome(self):
-        return self.nome
+        return self._nome
 
     def set_nome(self, nome):
-        self.nome = nome
+        self._nome = nome
 
     def get_descricao(self):
-        return self.descricao
+        return self._descricao
 
     def set_descricao(self, descricao):
-        self.descricao = descricao
+        self._descricao = descricao
 
     def get_codigo(self):
-        return self.codigo
+        return self._codigo
 
     def __str__(self):
-        return f"Nome: {self.nome}, tipo: {self.tipo}, Código: {self.codigo}"
+        return f"Nome: {self._nome}, descricao: {self._descricao}, Código: {self._codigo}"
 
