@@ -12,6 +12,9 @@ class Pessoa:
     def get_codigo(self):
         return self._codigo
 
+    def _set_codigo(self, codigo):
+        self._codigo = codigo
+
     def __str__(self):
         return f"Nome: {self._nome}, Código: {self._codigo}"
 
