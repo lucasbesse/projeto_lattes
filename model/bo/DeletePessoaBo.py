@@ -1,8 +1,6 @@
-class ReadPessoaCodigoUseCase:
+class DeletePessoaBo:
     def __init__(self, pessoa_repository):
         self._pessoa_repository = pessoa_repository
 
     def execute(self, codigo):
-        result = self._pessoa_repository.read_pessoa(codigo)
-
-        return result
+        self._pessoa_repository.remove(codigo)

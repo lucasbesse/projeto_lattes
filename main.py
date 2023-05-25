@@ -1,26 +1,26 @@
 import json
 
 from control.PessoaController import PessoaController
-from use_case.CreatePessoaUseCase import CreatePessoaUseCase
-from use_case.ReadPessoaCodigoUseCase import ReadPessoaCodigoUseCase
-from use_case.ReadPessoaPaginaUseCase import ReadPessoaPaginaUseCase
-from use_case.UpdatePessoaUseCase import UpdatePessoaUseCase
-from use_case.DeletePessoaUseCase import DeletePessoaUseCase
-from repository.PessoaRepository import PessoaRepository
+from model.bo.CreatePessoaBo import CreatePessoaBo
+from model.bo.ReadPessoaCodigoBo import ReadPessoaCodigoBo
+from model.bo.ReadPessoaPaginaBo import ReadPessoaPaginaBo
+from model.bo.UpdatePessoaBo import UpdatePessoaBo
+from model.bo.DeletePessoaBo import DeletePessoaBo
+from model.dao.repository.PessoaRepository import PessoaRepository
 
 pessoa_repository = PessoaRepository()
 
-create_pessoa_use_case = CreatePessoaUseCase(pessoa_repository)
-read_pessoa_codigo_use_case = ReadPessoaCodigoUseCase(pessoa_repository)
-read_pessoa_pagina_use_case = ReadPessoaPaginaUseCase(pessoa_repository)
-update_pessoa_use_case = UpdatePessoaUseCase(pessoa_repository)
-delete_pessoa_use_case = DeletePessoaUseCase(pessoa_repository)
+create_pessoa_bo = CreatePessoaBo(pessoa_repository)
+read_pessoa_codigo_bo = ReadPessoaCodigoBo(pessoa_repository)
+read_pessoa_pagina_bo = ReadPessoaPaginaBo(pessoa_repository)
+update_pessoa_bo = UpdatePessoaBo(pessoa_repository)
+delete_pessoa_bo = DeletePessoaBo(pessoa_repository)
 
-pc = PessoaController(create_pessoa_use_case,
-                      read_pessoa_codigo_use_case,
-                      read_pessoa_pagina_use_case,
-                      update_pessoa_use_case,
-                      delete_pessoa_use_case)
+pc = PessoaController(create_pessoa_bo,
+                      read_pessoa_codigo_bo,
+                      read_pessoa_pagina_bo,
+                      update_pessoa_bo,
+                      delete_pessoa_bo)
 
 nomes = ['Joao',
          'Maria',

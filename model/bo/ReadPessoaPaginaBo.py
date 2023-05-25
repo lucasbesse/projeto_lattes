@@ -1,4 +1,4 @@
-class ReadPessoaPaginaUseCase:
+class ReadPessoaPaginaBo:
     def __init__(self, pessoa_repository):
         self._pessoa_repository = pessoa_repository
 

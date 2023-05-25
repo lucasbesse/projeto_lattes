@@ -1,11 +1,13 @@
 import json
 
+from model.vo.Pessoa import Pessoa
 
-class UpdatePessoaUseCase:
+
+class CreatePessoaBo:
     def __init__(self, pessoa_repository):
         self._pessoa_repository = pessoa_repository
 
-    def execute(self, codigo_pessoa, json_data):
+    def execute(self, json_data):
         # Converter o JSON para um dicionário Python
         data_dict = json.loads(json_data)
 
@@ -20,4 +22,8 @@ class UpdatePessoaUseCase:
         if 'nome' in locals():
             # print(locals())
             # print(locals()['nome'])
-            self._pessoa_repository.update(codigo_pessoa, novo_nome=locals()['nome'])
+            pessoa_aux = Pessoa(locals()['nome'])
+            return self._pessoa_repository.add(pessoa_aux)
+
+        else:
+            return False
