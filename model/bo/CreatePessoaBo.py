@@ -4,8 +4,8 @@ from model.vo.Pessoa import Pessoa
 
 
 class CreatePessoaBo:
-    def __init__(self, pessoa_repository):
-        self._pessoa_repository = pessoa_repository
+    def __init__(self, pessoa_dao):
+        self._pessoa_dao = pessoa_dao
 
     def execute(self, json_data):
         # Converter o JSON para um dicionário Python
@@ -23,7 +23,7 @@ class CreatePessoaBo:
             # print(locals())
             # print(locals()['nome'])
             pessoa_aux = Pessoa(locals()['nome'])
-            return self._pessoa_repository.add(pessoa_aux)
+            return self._pessoa_dao.add(pessoa_aux)
 
         else:
             return False

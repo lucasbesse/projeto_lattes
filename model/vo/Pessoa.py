@@ -1,20 +1,31 @@
-class Pessoa:
-    def __init__(self, nome):
-        self._nome = nome
-        self._codigo = None
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+
+class Pessoa(Base):
+    __tablename__ = 'pessoa'
+
+    codigo = Column(Integer, primary_key=True, autoincrement=True)
+    nome = Column(String)
+
+    def __init__(self, nome, codigo=None):
+        self.nome = nome
+        self.codigo = codigo
 
     def get_nome(self):
-        return self._nome
+        return self.nome
 
     def set_nome(self, nome):
-        self._nome = nome
+        self.nome = nome
 
     def get_codigo(self):
-        return self._codigo
+        return self.codigo
 
     def _set_codigo(self, codigo):
-        self._codigo = codigo
+        self.codigo = codigo
 
     def __str__(self):
-        return f"Nome: {self._nome}, Código: {self._codigo}"
+        return f"Nome: {self.nome}, Código: {self.codigo}"
 

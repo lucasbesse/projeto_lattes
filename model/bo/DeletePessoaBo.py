@@ -1,6 +1,6 @@
 class DeletePessoaBo:
-    def __init__(self, pessoa_repository):
-        self._pessoa_repository = pessoa_repository
+    def __init__(self, pessoa_dao):
+        self._pessoa_dao = pessoa_dao
 
     def execute(self, codigo):
-        self._pessoa_repository.remove(codigo)
+        self._pessoa_dao.remove(codigo)

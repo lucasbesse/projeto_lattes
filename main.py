@@ -1,20 +1,27 @@
 import json
 
 from control.PessoaController import PessoaController
+
 from model.bo.CreatePessoaBo import CreatePessoaBo
 from model.bo.ReadPessoaCodigoBo import ReadPessoaCodigoBo
 from model.bo.ReadPessoaPaginaBo import ReadPessoaPaginaBo
 from model.bo.UpdatePessoaBo import UpdatePessoaBo
 from model.bo.DeletePessoaBo import DeletePessoaBo
+
 from model.dao.repository.PessoaRepository import PessoaRepository
 
-pessoa_repository = PessoaRepository()
+from model.dao.PessoaDao import PessoaDao
 
-create_pessoa_bo = CreatePessoaBo(pessoa_repository)
-read_pessoa_codigo_bo = ReadPessoaCodigoBo(pessoa_repository)
-read_pessoa_pagina_bo = ReadPessoaPaginaBo(pessoa_repository)
-update_pessoa_bo = UpdatePessoaBo(pessoa_repository)
-delete_pessoa_bo = DeletePessoaBo(pessoa_repository)
+from model.dao.Banco import Banco
+
+banco = Banco()
+pessoa_dao = PessoaDao(banco)
+
+create_pessoa_bo = CreatePessoaBo(pessoa_dao)
+read_pessoa_codigo_bo = ReadPessoaCodigoBo(pessoa_dao)
+read_pessoa_pagina_bo = ReadPessoaPaginaBo(pessoa_dao)
+update_pessoa_bo = UpdatePessoaBo(pessoa_dao)
+delete_pessoa_bo = DeletePessoaBo(pessoa_dao)
 
 pc = PessoaController(create_pessoa_bo,
                       read_pessoa_codigo_bo,
