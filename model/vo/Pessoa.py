@@ -28,4 +28,3 @@ class Pessoa(Base):
 
     def __str__(self):
         return f"Nome: {self.nome}, Código: {self.codigo}"
-

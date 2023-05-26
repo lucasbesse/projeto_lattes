@@ -8,8 +8,6 @@ from model.bo.ReadPessoaPaginaBo import ReadPessoaPaginaBo
 from model.bo.UpdatePessoaBo import UpdatePessoaBo
 from model.bo.DeletePessoaBo import DeletePessoaBo
 
-from model.dao.repository.PessoaRepository import PessoaRepository
-
 from model.dao.PessoaDao import PessoaDao
 
 from model.dao.Banco import Banco
@@ -87,4 +85,3 @@ for pessoa in pessoas:
 
 print('======= READ CODIGO =========')
 print(pc.ler_pessoa_codigo(2))
-

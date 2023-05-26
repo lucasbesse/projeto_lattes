@@ -2,7 +2,7 @@ from model.vo.Pessoa import Pessoa
 
 
 class PessoaDao:
-    def __init__(self,banco):
+    def __init__(self, banco):
         # Configuração da conexão com o banco de dados
         self.banco = banco
 
