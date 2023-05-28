@@ -1,4 +1,4 @@
-from model.vo.Pessoa import Pessoa
+from model.DTO.Pessoa import Pessoa
 
 
 class PessoaDao:
@@ -9,7 +9,8 @@ class PessoaDao:
     def add(self, pessoa):
         self.banco.session.add(pessoa)
         self.banco.session.commit()
-        return True
+        self.banco.session.refresh(pessoa)
+        return pessoa.codigo
 
     def read_pagination(self, limit, offset):
         pessoas = self.banco.session.query(Pessoa).limit(limit).offset(offset).all()
@@ -29,13 +30,13 @@ class PessoaDao:
             return True
         return False
 
-    def update(self, pessoa_id, novo_nome="", novo_codigo=""):
-        pessoa = self.banco.session.query(Pessoa).get(pessoa_id)
+    def update(self, pessoa_codigo, nome="", codigo=""):
+        pessoa = self.banco.session.query(Pessoa).get(pessoa_codigo)
         if pessoa:
-            if novo_nome:
-                pessoa.nome = novo_nome
-            if novo_codigo:
-                pessoa.codigo = novo_codigo
+            if nome:
+                pessoa.nome = nome
+            if codigo:
+                pessoa.codigo = codigo
             self.banco.session.commit()
             return True
         return False
