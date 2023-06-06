@@ -1,5 +1,4 @@
 import json
-
 import requests
 
 
@@ -12,8 +11,16 @@ def teste_criar():
     #     'idade': 30,
     #     'email': 'joao@example.com'
     # }
+    # data_criar_pessoa = {
+    #     'nome': 'João',
+    #     'email': 'abcd@email.com',
+    #     'experiencia': 'nenhuma',
+    #     'formacao': 'youtube'
+    # }
     data_criar_pessoa = {
-        'nome': 'João'
+        'nome': 'João',
+        'email': 'abcd@email.com',
+        'experiencia': 'nenhuma'
     }
     data_criar_pessoa = json.dumps(data_criar_pessoa)
     response = requests.post(url_criar_pessoa, json=data_criar_pessoa)
@@ -34,7 +41,7 @@ def teste_ler_codigo():
 def teste_ler():
     print('=========== READ ============')
     # Endpoint para ler pessoas com paginação
-    url_ler_pessoa_pagina = 'http://localhost:5000/pessoas?limit=10&offset=1'
+    url_ler_pessoa_pagina = 'http://localhost:5000/pessoas?limit=10&offset=0'
     response = requests.get(url_ler_pessoa_pagina)
     print(response.status_code)
     print(response.json())
@@ -63,8 +70,8 @@ def teste_delete():
     print(response.json())
 
 
-# teste_criar()
+teste_criar()
 # teste_ler_codigo()
-teste_atualiza()
+# teste_atualiza()
 # teste_ler_codigo()
 teste_ler()

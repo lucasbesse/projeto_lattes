@@ -9,16 +9,40 @@ class Pessoa(Base):
 
     codigo = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String)
+    email = Column(String)
+    formacao = Column(String)
+    experiencia = Column(String)
 
-    def __init__(self, nome, codigo=None):
-        self.nome = nome
+    def __init__(self, nome, email=None, formacao=None, experiencia=None, codigo=None):
         self.codigo = codigo
+        self.nome = nome
+        self.email = email
+        self.formacao = formacao
+        self.experiencia = experiencia
 
     def get_nome(self):
         return self.nome
 
     def set_nome(self, nome):
         self.nome = nome
+
+    def get_email(self):
+        return self.email
+
+    def set_email(self, email):
+        self.email = email
+
+    def get_formacao(self):
+        return self.formacao
+
+    def set_formacao(self, formacao):
+        self.formacao = formacao
+
+    def get_experiencia(self):
+        return self.experiencia
+
+    def set_experiencia(self, experiencia):
+        self.nome = experiencia
 
     def get_codigo(self):
         return self.codigo

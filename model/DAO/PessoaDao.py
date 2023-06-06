@@ -30,13 +30,20 @@ class PessoaDao:
             return True
         return False
 
-    def update(self, pessoa_codigo, nome="", codigo=""):
+    def update(self, pessoa_codigo, nome="", codigo="", email="", formacao="", experiencia=""):
         pessoa = self.banco.session.query(Pessoa).get(pessoa_codigo)
         if pessoa:
-            if nome:
-                pessoa.nome = nome
             if codigo:
-                pessoa.codigo = codigo
+                pessoa.set_codigo(codigo)
+            if nome:
+                pessoa.set_nome(nome)
+            if email:
+                pessoa.set_email(email)
+            if formacao:
+                pessoa.set_formacao(formacao)
+            if experiencia:
+                pessoa.set_experiencia(experiencia)
+
             self.banco.session.commit()
             return True
         return False
