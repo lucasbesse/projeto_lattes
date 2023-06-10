@@ -1,8 +1,10 @@
 import json
 
 from flask import jsonify
+from flask import make_response
 
-from control.Schemas.PessoaSchema import PessoaSchema
+from ..Schemas.PessoaSchema import PessoaSchema
+from ..Schemas.PessoaUpdateSchema import PessoaUpdateSchema
 
 
 class PessoaController:
@@ -18,22 +20,31 @@ class PessoaController:
         self._delete_pessoa_bo = delete_pessoa_bo
 
         self.pessoa_schema = PessoaSchema()
+        self.pessoa_update_schema = PessoaUpdateSchema()
 
     def criar_pessoa(self, json_data):
+        print(type(json.loads(json_data)))
         if not json_data:
-            return jsonify({'error': 'Dados JSON ausentes'}), 400
-
+            print('nao tem json')
+            response = make_response(jsonify({'error': 'Dados JSON ausentes'}), 400)
+            return response
+        print('tem json')
         # Validar campos obrigatórios
         errors = self.pessoa_schema.validate(json.loads(json_data))
 
         if errors:
-            return jsonify({'error': errors}), 400
+            response = make_response(jsonify({'error': errors}), 400)
+            return response
 
         # Executar ação do Business Object
         try:
             pessoa = self.pessoa_schema.load(json.loads(json_data))
             pessoa_id = self._create_pessoa_bo.execute(pessoa)
-            return jsonify({'success': 'Pessoa criada com sucesso', 'id': pessoa_id}), 201
+
+            response = make_response(jsonify({'success': 'Pessoa criada com sucesso', 'id': pessoa_id}), 201)
+            response.headers['Access-Control-Allow-Origin'] = '*'
+
+            return response
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
@@ -52,22 +63,26 @@ class PessoaController:
 
         pessoas = self._read_pessoa_pagina_bo.execute(limit, offset)
         pessoas_json = self.pessoa_schema.dump(pessoas, many=True)
-        return jsonify(pessoas_json), 200
+
+        response = make_response(jsonify(pessoas_json), 200)
+        response.headers['Access-Control-Allow-Origin'] = '*'
+
+        return response
 
     def atualizar_pessoa(self, codigo, json_data):
         if not json_data:
             return jsonify({'error': 'Dados JSON ausentes'}), 400
 
         # Validar campos obrigatórios
-        errors = self.pessoa_schema.validate(json.loads(json_data))
+        errors = self.pessoa_update_schema.validate(json.loads(json_data))
         if errors:
             return jsonify({'error': errors}), 400
 
         # Executar ação do Business Object
         try:
-            print(json_data)
-            pessoa = self.pessoa_schema.load(json.loads(json_data))
-            print(pessoa)
+            # print(json_data)
+            pessoa = self.pessoa_update_schema.load(json.loads(json_data))
+            print(type(pessoa),pessoa)
             success = self._update_pessoa_bo.execute(codigo, pessoa)
             if success:
                 return jsonify({'success': 'Pessoa atualizada com sucesso'}), 200
@@ -82,5 +97,3 @@ class PessoaController:
             return jsonify({'success': 'Pessoa deletada com sucesso'}), 200
         else:
             return jsonify({'error': 'Pessoa não encontrada'}), 404
-
-

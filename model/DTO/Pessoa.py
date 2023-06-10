@@ -42,7 +42,7 @@ class Pessoa(Base):
         return self.experiencia
 
     def set_experiencia(self, experiencia):
-        self.nome = experiencia
+        self.experiencia = experiencia
 
     def get_codigo(self):
         return self.codigo

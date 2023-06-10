@@ -17,12 +17,14 @@ def teste_criar():
     #     'experiencia': 'nenhuma',
     #     'formacao': 'youtube'
     # }
-    data_criar_pessoa = {
-        'nome': 'João',
-        'email': 'abcd@email.com',
-        'experiencia': 'nenhuma'
-    }
-    data_criar_pessoa = json.dumps(data_criar_pessoa)
+    # data_criar_pessoa = {
+    #     'nome': 'João',
+    #     'email': 'abcd@email.com',
+    #     'experiencia': 'nenhuma'
+    # }
+    data_criar_pessoa = {"nome": "João", "email": "abcd@email.com", "experiencia": "nenhuma"}
+    # data_criar_pessoa = json.dumps(data_criar_pessoa)
+    print(type(data_criar_pessoa),data_criar_pessoa)
     response = requests.post(url_criar_pessoa, json=data_criar_pessoa)
     print(response.status_code)
     print(response.text)
@@ -50,12 +52,14 @@ def teste_ler():
 def teste_atualiza():
     print('======= UPDATE =========')
     # Endpoint para atualizar uma pessoa
-    codigo = 43
+    codigo = 6
     url_atualizar_pessoa = f'http://localhost:5000/pessoas/{codigo}'
     data_atualizar_pessoa = {
-        'nome': 'João e o Pé de Feijão'
+        'nome': 'João e o Pé de Feijão',
+        'experiencia': 'alguma',
+        'formacao': 'pra que?'
     }
-    response = requests.put(url_atualizar_pessoa, json=json.dumps(data_atualizar_pessoa))
+    response = requests.put(url_atualizar_pessoa, json=data_atualizar_pessoa)
     print(response.status_code)
     print(response.json())
 
@@ -63,15 +67,16 @@ def teste_atualiza():
 def teste_delete():
     print('======= DELETE =========')
     # Endpoint para deletar uma pessoa
-    codigo = 1
+    codigo = 3
     url_deletar_pessoa = f'http://127.0.0.1:5000/pessoas/{codigo}'
     response = requests.delete(url_deletar_pessoa)
     print(response.status_code)
     print(response.json())
 
 
-teste_criar()
+# teste_criar()
 # teste_ler_codigo()
-# teste_atualiza()
+teste_atualiza()
 # teste_ler_codigo()
-teste_ler()
+teste_delete()
+# teste_ler()

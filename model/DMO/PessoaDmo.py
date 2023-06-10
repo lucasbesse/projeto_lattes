@@ -1,7 +1,7 @@
 from model.DTO.Pessoa import Pessoa
 
 
-class PessoaDao:
+class PessoaDmo:
     def __init__(self, banco):
         # Configuração da conexão com o banco de dados
         self.banco = banco
@@ -24,6 +24,7 @@ class PessoaDao:
 
     def remove(self, pessoa_id):
         pessoa = self.banco.session.query(Pessoa).get(pessoa_id)
+        print(pessoa)
         if pessoa:
             self.banco.session.delete(pessoa)
             self.banco.session.commit()

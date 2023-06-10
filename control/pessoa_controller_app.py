@@ -1,4 +1,6 @@
 from flask import Blueprint, jsonify, request, Flask
+from flask_cors import CORS
+import json
 
 from control.Controllers.PessoaController import PessoaController
 
@@ -8,18 +10,18 @@ from model.Services.ReadPessoaPaginaBo import ReadPessoaPaginaBo
 from model.Services.UpdatePessoaBo import UpdatePessoaBo
 from model.Services.DeletePessoaBo import DeletePessoaBo
 
-from model.DAO.PessoaDao import PessoaDao
+from model.DMO.PessoaDmo import PessoaDmo
 
-from model.DAO.Banco import Banco
+from model.DMO.Banco import Banco
 
 banco = Banco()
-pessoa_dao = PessoaDao(banco)
+pessoa_dmo = PessoaDmo(banco)
 
-create_pessoa_bo = CreatePessoaBo(pessoa_dao)
-read_pessoa_codigo_bo = ReadPessoaCodigoBo(pessoa_dao)
-read_pessoa_pagina_bo = ReadPessoaPaginaBo(pessoa_dao)
-update_pessoa_bo = UpdatePessoaBo(pessoa_dao)
-delete_pessoa_bo = DeletePessoaBo(pessoa_dao)
+create_pessoa_bo = CreatePessoaBo(pessoa_dmo)
+read_pessoa_codigo_bo = ReadPessoaCodigoBo(pessoa_dmo)
+read_pessoa_pagina_bo = ReadPessoaPaginaBo(pessoa_dmo)
+update_pessoa_bo = UpdatePessoaBo(pessoa_dmo)
+delete_pessoa_bo = DeletePessoaBo(pessoa_dmo)
 
 pessoa_controller = PessoaController(create_pessoa_bo,
                                      read_pessoa_codigo_bo,
@@ -30,13 +32,15 @@ pessoa_controller = PessoaController(create_pessoa_bo,
 # pc = PessoaController()
 
 pessoa_controller_app = Flask(__name__)
+CORS(pessoa_controller_app)
 
 
-# pc = PessoaController()
 @pessoa_controller_app.route('/pessoas', methods=['POST'])
 def criar_pessoa():
-    json_data = request.get_json()
-    return pessoa_controller.criar_pessoa(json_data)
+    jason = json.dumps(request.get_json())
+    print(type(jason))
+    print(jason)
+    return pessoa_controller.criar_pessoa(jason)
 
 
 @pessoa_controller_app.route('/pessoas/<int:codigo>', methods=['GET'])
@@ -53,8 +57,10 @@ def ler_pessoa_pagina():
 
 @pessoa_controller_app.route('/pessoas/<int:codigo>', methods=['PUT'])
 def atualizar_pessoa(codigo):
-    json_data = request.get_json()
-    return pessoa_controller.atualizar_pessoa(codigo, json_data)
+    jason = json.dumps(request.get_json())
+    print(type(jason))
+    print(jason)
+    return pessoa_controller.atualizar_pessoa(codigo, jason)
 
 
 @pessoa_controller_app.route('/pessoas/<int:codigo>', methods=['DELETE'])

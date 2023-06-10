@@ -2,10 +2,10 @@ from model.DTO.Pessoa import Pessoa
 
 
 class CreatePessoaBo:
-    def __init__(self, pessoa_dao):
-        self._pessoa_dao = pessoa_dao
+    def __init__(self, pessoa_dmo):
+        self.pessoa_dmo = pessoa_dmo
 
     def execute(self, data_dict):
 
         pessoa_aux = Pessoa(**data_dict)
-        return self._pessoa_dao.add(pessoa_aux)
+        return self.pessoa_dmo.add(pessoa_aux)

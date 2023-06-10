@@ -1,6 +1,6 @@
 class DeletePessoaBo:
-    def __init__(self, pessoa_dao):
-        self._pessoa_dao = pessoa_dao
+    def __init__(self, pessoa_dmo):
+        self.pessoa_dmo = pessoa_dmo
 
     def execute(self, codigo):
-        self._pessoa_dao.remove(codigo)
+        return self.pessoa_dmo.remove(codigo)
