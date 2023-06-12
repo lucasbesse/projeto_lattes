@@ -10,12 +10,12 @@ from Model.BO.PessoaReadPaginaBo import ReadPessoaPaginaBo
 from Model.BO.PessoaUpdateBo import UpdatePessoaBo
 from Model.BO.PessoaDeleteBo import DeletePessoaBo
 
-from Model.DMO.PessoaOrm import PessoaOrm
+from Model.DMO.PessoaDmo import PessoaDmo
 
-from Model.DMO.DataBase.Banco import Banco
+from Model.DataBase.Banco import Banco
 
 banco = Banco()
-pessoa_dmo = PessoaOrm(banco)
+pessoa_dmo = PessoaDmo(banco)
 
 create_pessoa_bo = CreatePessoaBo(pessoa_dmo)
 read_pessoa_codigo_bo = ReadPessoaCodigoBo(pessoa_dmo)
@@ -37,10 +37,10 @@ CORS(pessoa_routes_bp)
 
 @pessoa_routes_bp.route('/pessoas', methods=['POST'])
 def criar_pessoa():
-    jason = json.dumps(request.get_json())
-    print(type(jason))
-    print(jason)
-    return pessoa_controller.criar_pessoa(jason)
+    json_data = json.dumps(request.get_json())
+    print(type(json_data))
+    print(json_data)
+    return pessoa_controller.criar_pessoa(json_data)
 
 
 @pessoa_routes_bp.route('/pessoas/<int:codigo>', methods=['GET'])
@@ -57,10 +57,10 @@ def ler_pessoa_pagina():
 
 @pessoa_routes_bp.route('/pessoas/<int:codigo>', methods=['PUT'])
 def atualizar_pessoa(codigo):
-    jason = json.dumps(request.get_json())
-    print(type(jason))
-    print(jason)
-    return pessoa_controller.atualizar_pessoa(codigo, jason)
+    json_data = json.dumps(request.get_json())
+    print(type(json_data))
+    print(json_data)
+    return pessoa_controller.atualizar_pessoa(codigo, json_data)
 
 
 @pessoa_routes_bp.route('/pessoas/<int:codigo>', methods=['DELETE'])

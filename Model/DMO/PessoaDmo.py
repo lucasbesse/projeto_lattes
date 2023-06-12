@@ -1,7 +1,7 @@
 from Model.ORM.Pessoa import Pessoa
 
 
-class PessoaOrm:
+class PessoaDmo:
     def __init__(self, banco):
         # Configuração da conexão com o banco de dados
         self.banco = banco
