@@ -21,4 +21,3 @@ class Resultado:
 
     def __str__(self):
         return f"Nome: {self._nome}, descricao: {self._descricao}, Código: {self._codigo}"
-

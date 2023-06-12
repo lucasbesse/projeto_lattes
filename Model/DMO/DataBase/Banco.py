@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 
-class Banco():
+class Banco:
     def __init__(self):
 
         host = 'localhost'
@@ -10,5 +10,5 @@ class Banco():
         user = 'projeto_lattes'
         pwd = 'abcd1234'
         engine = create_engine(f"postgresql://{user}:{pwd}@{host}/{db}")
-        Session = sessionmaker(bind=engine)
-        self.session = Session()
+        session = sessionmaker(bind=engine)
+        self.session = session()

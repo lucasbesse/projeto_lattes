@@ -8,16 +8,16 @@ from ..Schemas.PessoaUpdateSchema import PessoaUpdateSchema
 
 
 class PessoaController:
-    def __init__(self, create_pessoa_bo,
-                 read_pessoa_codigo_bo,
-                 read_pessoa_pagina_bo,
-                 update_pessoa_bo,
-                 delete_pessoa_bo):
-        self._create_pessoa_bo = create_pessoa_bo
-        self._read_pessoa_codigo_bo = read_pessoa_codigo_bo
-        self._read_pessoa_pagina_bo = read_pessoa_pagina_bo
-        self._update_pessoa_bo = update_pessoa_bo
-        self._delete_pessoa_bo = delete_pessoa_bo
+    def __init__(self, pessoa_create_bo,
+                 pessoa_read_codigo_bo,
+                 pessoa_read_pagina_bo,
+                 pessoa_update_bo,
+                 pessoa_delete_bo):
+        self.pessoa_create_bo = pessoa_create_bo
+        self.pessoa_read_codigo_bo = pessoa_read_codigo_bo
+        self.pessoa_read_pagina_bo = pessoa_read_pagina_bo
+        self.pessoa_update_bo = pessoa_update_bo
+        self.pessoa_delete_bo = pessoa_delete_bo
 
         self.pessoa_schema = PessoaSchema()
         self.pessoa_update_schema = PessoaUpdateSchema()
@@ -39,7 +39,7 @@ class PessoaController:
         # Executar ação do Business Object
         try:
             pessoa = self.pessoa_schema.load(json.loads(json_data))
-            pessoa_id = self._create_pessoa_bo.execute(pessoa)
+            pessoa_id = self.pessoa_create_bo.execute(pessoa)
 
             response = make_response(jsonify({'success': 'Pessoa criada com sucesso', 'id': pessoa_id}), 201)
             response.headers['Access-Control-Allow-Origin'] = '*'
@@ -49,7 +49,7 @@ class PessoaController:
             return jsonify({'error': str(e)}), 500
 
     def ler_pessoa_codigo(self, codigo):
-        pessoa = self._read_pessoa_codigo_bo.execute(codigo)
+        pessoa = self.pessoa_read_codigo_bo.execute(codigo)
         if pessoa:
             pessoa_json = self.pessoa_schema.dump(pessoa)
             return jsonify(pessoa_json), 200
@@ -61,7 +61,7 @@ class PessoaController:
         if limit > 200:
             limit = 200
 
-        pessoas = self._read_pessoa_pagina_bo.execute(limit, offset)
+        pessoas = self.pessoa_read_pagina_bo.execute(limit, offset)
         pessoas_json = self.pessoa_schema.dump(pessoas, many=True)
 
         response = make_response(jsonify(pessoas_json), 200)
@@ -83,7 +83,7 @@ class PessoaController:
             # print(json_data)
             pessoa = self.pessoa_update_schema.load(json.loads(json_data))
             print(type(pessoa),pessoa)
-            success = self._update_pessoa_bo.execute(codigo, pessoa)
+            success = self.pessoa_update_bo.execute(codigo, pessoa)
             if success:
                 return jsonify({'success': 'Pessoa atualizada com sucesso'}), 200
             else:
@@ -92,7 +92,7 @@ class PessoaController:
             return jsonify({'error': str(e)}), 500
 
     def deletar_pessoa(self, codigo):
-        success = self._delete_pessoa_bo.execute(codigo)
+        success = self.pessoa_delete_bo.execute(codigo)
         if success:
             return jsonify({'success': 'Pessoa deletada com sucesso'}), 200
         else:

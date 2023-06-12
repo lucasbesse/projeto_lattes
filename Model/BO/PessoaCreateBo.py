@@ -1,4 +1,4 @@
-from model.DTO.Pessoa import Pessoa
+from Model.ORM.Pessoa import Pessoa
 
 
 class CreatePessoaBo:

@@ -7,4 +7,3 @@ class PessoaSchema(Schema):
     email = fields.Str(required=False)
     formacao = fields.Str(required=False)
     experiencia = fields.Str(required=False)
-

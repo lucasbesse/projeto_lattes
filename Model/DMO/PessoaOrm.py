@@ -1,7 +1,7 @@
-from model.DTO.Pessoa import Pessoa
+from Model.ORM.Pessoa import Pessoa
 
 
-class PessoaDmo:
+class PessoaOrm:
     def __init__(self, banco):
         # Configuração da conexão com o banco de dados
         self.banco = banco
