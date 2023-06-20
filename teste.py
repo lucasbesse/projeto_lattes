@@ -1,6 +1,12 @@
 import json
 import requests
 
+from DataBase.Banco import Banco
+from Model.DMO.ProjetoDmo import ProjetoDmo
+from Model.DMO.ResultadoDmo import ResultadoDmo
+from Model.ORM.Projeto import Projeto
+from Model.ORM.Resultado import Resultado
+
 
 def teste_criar():
     print('======= CREATE =========')
@@ -79,4 +85,14 @@ def teste_delete():
 # teste_atualiza()
 # teste_ler_codigo()
 # teste_delete()
-teste_ler()
+# teste_ler()
+
+b1 = Banco()
+dmo = ProjetoDmo(b1)
+
+p1 = Projeto('projeto1', 'este é um teste de projeto')
+dmo.add(p1)
+
+dmo = ResultadoDmo(b1)
+r1 = Resultado('resultado1','uma breve descucao','producao audiovisual')
+dmo.add(r1)

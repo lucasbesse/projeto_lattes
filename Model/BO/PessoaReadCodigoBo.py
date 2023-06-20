@@ -1,4 +1,4 @@
-class ReadPessoaCodigoBo:
+class PessoaReadCodigoBo:
     def __init__(self, pessoa_dmo):
         self.pessoa_dmo = pessoa_dmo
 

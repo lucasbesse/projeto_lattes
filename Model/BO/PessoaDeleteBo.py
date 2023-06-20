@@ -1,4 +1,4 @@
-class DeletePessoaBo:
+class PessoaDeleteBo:
     def __init__(self, pessoa_dmo):
         self.pessoa_dmo = pessoa_dmo
 

@@ -4,24 +4,24 @@ import json
 
 from Control.Controllers.PessoaController import PessoaController
 
-from Model.BO.PessoaCreateBo import CreatePessoaBo
-from Model.BO.PessoaReadCodigoBo import ReadPessoaCodigoBo
-from Model.BO.PessoaReadPaginaBo import ReadPessoaPaginaBo
-from Model.BO.PessoaUpdateBo import UpdatePessoaBo
-from Model.BO.PessoaDeleteBo import DeletePessoaBo
+from Model.BO.PessoaCreateBo import PessoaCreateBo
+from Model.BO.PessoaReadCodigoBo import PessoaReadCodigoBo
+from Model.BO.PessoaReadPaginaBo import PessoaReadPaginaBo
+from Model.BO.PessoaUpdateBo import PessoaUpdateBo
+from Model.BO.PessoaDeleteBo import PessoaDeleteBo
 
 from Model.DMO.PessoaDmo import PessoaDmo
 
-from Model.DataBase.Banco import Banco
+from DataBase.Banco import Banco
 
 banco = Banco()
 pessoa_dmo = PessoaDmo(banco)
 
-create_pessoa_bo = CreatePessoaBo(pessoa_dmo)
-read_pessoa_codigo_bo = ReadPessoaCodigoBo(pessoa_dmo)
-read_pessoa_pagina_bo = ReadPessoaPaginaBo(pessoa_dmo)
-update_pessoa_bo = UpdatePessoaBo(pessoa_dmo)
-delete_pessoa_bo = DeletePessoaBo(pessoa_dmo)
+create_pessoa_bo = PessoaCreateBo(pessoa_dmo)
+read_pessoa_codigo_bo = PessoaReadCodigoBo(pessoa_dmo)
+read_pessoa_pagina_bo = PessoaReadPaginaBo(pessoa_dmo)
+update_pessoa_bo = PessoaUpdateBo(pessoa_dmo)
+delete_pessoa_bo = PessoaDeleteBo(pessoa_dmo)
 
 pessoa_controller = PessoaController(create_pessoa_bo,
                                      read_pessoa_codigo_bo,

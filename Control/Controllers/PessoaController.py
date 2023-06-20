@@ -3,8 +3,8 @@ import json
 from flask import jsonify
 from flask import make_response
 
-from ..Schemas.PessoaSchema import PessoaSchema
-from ..Schemas.PessoaUpdateSchema import PessoaUpdateSchema
+from Model.Schemas.PessoaSchema import PessoaSchema
+from Model.Schemas.PessoaUpdateSchema import PessoaUpdateSchema
 
 
 class PessoaController:

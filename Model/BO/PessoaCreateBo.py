@@ -1,7 +1,7 @@
 from Model.ORM.Pessoa import Pessoa
 
 
-class CreatePessoaBo:
+class PessoaCreateBo:
     def __init__(self, pessoa_dmo):
         self.pessoa_dmo = pessoa_dmo
 
