@@ -3,19 +3,23 @@ from flask_cors import CORS
 import json
 
 from Control.Controllers.ProjetoController import ProjetoController
-
+from Control.Routes.PessoaRoutes import read_pessoa_codigo_bo
 from Model.BO.ProjetoCreateBo import ProjetoCreateBo
+from Model.BO.ProjetoPessoaCreateBo import ProjetoPessoaCreateBo
+from Model.BO.ProjetoPessoaReadBo import ProjetoPessoaReadBo
 from Model.BO.ProjetoReadCodigoBo import ProjetoReadCodigoBo
 from Model.BO.ProjetoReadPaginaBo import ProjetoReadPaginaBo
 from Model.BO.ProjetoUpdateBo import ProjetoUpdateBo
 from Model.BO.ProjetoDeleteBo import ProjetoDeleteBo
 
 from Model.DMO.ProjetoDmo import ProjetoDmo
+from Model.DMO.ProjetoPessoaDmo import ProjetoPessoaDmo
 
 from DataBase.Banco import Banco
 
 banco = Banco()
 projeto_dmo = ProjetoDmo(banco)
+projeto_pessoa_dmo = ProjetoPessoaDmo(banco)
 
 create_projeto_bo = ProjetoCreateBo(projeto_dmo)
 read_projeto_codigo_bo = ProjetoReadCodigoBo(projeto_dmo)
@@ -23,11 +27,17 @@ read_projeto_pagina_bo = ProjetoReadPaginaBo(projeto_dmo)
 update_projeto_bo = ProjetoUpdateBo(projeto_dmo)
 delete_projeto_bo = ProjetoDeleteBo(projeto_dmo)
 
+projeto_pessoa_create_bo = ProjetoPessoaCreateBo(projeto_pessoa_dmo, projeto_read_codigo_bo=read_projeto_codigo_bo,
+                                                 pessoa_read_codigo_bo=read_pessoa_codigo_bo)
+projeto_pessoa_read_bo = ProjetoPessoaReadBo(projeto_pessoa_dmo)
 projeto_controller = ProjetoController(create_projeto_bo,
-                                     read_projeto_codigo_bo,
-                                     read_projeto_pagina_bo,
-                                     update_projeto_bo,
-                                     delete_projeto_bo)
+                                       read_projeto_codigo_bo,
+                                       read_projeto_pagina_bo,
+                                       update_projeto_bo,
+                                       delete_projeto_bo,
+                                       projeto_pessoa_create_bo,
+                                       projeto_pessoa_read_bo,
+                                       read_pessoa_codigo_bo)
 
 # pc = ProjetoController()
 

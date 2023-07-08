@@ -32,6 +32,7 @@ pessoa_controller = PessoaController(create_pessoa_bo,
 # pc = PessoaController()
 
 pessoa_routes_bp = Blueprint("pessoa_routes_bp", __name__)
+
 CORS(pessoa_routes_bp)
 
 

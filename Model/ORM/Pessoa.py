@@ -1,5 +1,7 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+
 
 Base = declarative_base()
 
@@ -12,6 +14,7 @@ class Pessoa(Base):
     email = Column(String)
     formacao = Column(String)
     experiencia = Column(String)
+    # projeto_pessoa_rel = relationship(ProjetoPessoa, back_populates='pessoa')
 
     def __init__(self, nome, email=None, formacao=None, experiencia=None, codigo=None):
         self.codigo = codigo
