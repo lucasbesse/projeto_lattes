@@ -1,11 +1,4 @@
-import json
 import requests
-
-from DataBase.Banco import Banco
-from Model.DMO.ProjetoDmo import ProjetoDmo
-from Model.DMO.ResultadoDmo import ResultadoDmo
-from Model.ORM.Projeto import Projeto
-from Model.ORM.Resultado import Resultado
 
 
 def teste_criar():

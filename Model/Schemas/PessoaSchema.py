@@ -1,9 +1,9 @@
-from marshmallow import Schema, fields, validate
+from marshmallow import Schema, fields
 
 
 class PessoaSchema(Schema):
-    nome = fields.Str(required=True, validate=validate.Length(min=3, max=50))
     codigo = fields.Int(required=False)
-    email = fields.Str(required=False)
+    nome = fields.Str(required=True)
+    email = fields.Str(required=True)
     formacao = fields.Str(required=False)
     experiencia = fields.Str(required=False)

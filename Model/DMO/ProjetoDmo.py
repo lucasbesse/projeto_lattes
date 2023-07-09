@@ -35,18 +35,20 @@ class ProjetoDmo:
         projeto = self.banco.session.query(Projeto).get(projeto_codigo)
         if projeto:
             if codigo:
-                projeto.set_codigo(codigo)
+                projeto.codigo = codigo
             if titulo:
-                projeto.set_titulo(titulo)
+                projeto.titulo = titulo
             if descricao:
-                projeto.set_descricao(descricao)
+                projeto.descricao = descricao
             if integrantes:
-                projeto.set_integrantes(integrantes)
+                projeto.integrantes = integrantes
             if pesquisadores:
-                projeto.set_pesquisadores(pesquisadores)
+                projeto.pesquisadores = pesquisadores
             if resultado:
-                projeto.set_resultado(resultado)
+                projeto.resultado = resultado
 
             self.banco.session.commit()
             return True
         return False
+
+

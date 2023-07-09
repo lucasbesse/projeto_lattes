@@ -35,15 +35,15 @@ class PessoaDmo:
         pessoa = self.banco.session.query(Pessoa).get(pessoa_codigo)
         if pessoa:
             if codigo:
-                pessoa.set_codigo(codigo)
+                pessoa.codigo = codigo
             if nome:
-                pessoa.set_nome(nome)
+                pessoa.nome = nome
             if email:
-                pessoa.set_email(email)
+                pessoa.email = email
             if formacao:
-                pessoa.set_formacao(formacao)
+                pessoa.formacao = formacao
             if experiencia:
-                pessoa.set_experiencia(experiencia)
+                pessoa.experiencia = experiencia
 
             self.banco.session.commit()
             return True

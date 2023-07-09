@@ -25,6 +25,7 @@ def teste_criar():
     data_criar_resultado = {"titulo": "A era das flores",
                             "descricao": "Filme sobre independência cognitiva",
                             "tipo": "Produçao audiovisual",
+                            "projeto_codigo": 1,
                             "pessoas": [{'codigo': 1, 'tipo': 'a'},
                                         {'codigo': 2, 'tipo': 'a'},
                                         {'codigo': 3, 'tipo': 'i'}]
@@ -79,9 +80,9 @@ def teste_delete():
     print(json.dumps(response.json(), indent=4))
 
 
-teste_criar()
-# teste_ler_codigo()
-teste_atualiza()
+# teste_criar()
+teste_ler_codigo()
+# teste_atualiza()
 # teste_ler_codigo()
 # teste_delete()
-teste_ler()
+# teste_ler()

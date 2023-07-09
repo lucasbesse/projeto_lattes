@@ -6,3 +6,4 @@ class ResultadoSchema(Schema):
     titulo = fields.Str(required=True)
     descricao = fields.Str(required=True)
     tipo = fields.Str(required=False)
+    projeto_codigo = fields.Int(required=False)

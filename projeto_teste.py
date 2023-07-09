@@ -23,7 +23,6 @@ def teste_criar():
     #     'experiencia': 'nenhuma'
     # }
     data_criar_projeto = {"titulo": "João",
-                          "descricao": "abcd@email.com",
                           "pessoas": [{'codigo': 1, 'tipo': 'i'},
                                       {'codigo': 2, 'tipo': 'i'},
                                       {'codigo': 3, 'tipo': 'p'}]
@@ -78,9 +77,9 @@ def teste_delete():
     print(json.dumps(response.json(), indent=4))
 
 
-# teste_criar()
+teste_criar()
 # teste_ler_codigo()
-teste_atualiza()
-teste_ler_codigo()
+# teste_atualiza()
+# teste_ler_codigo()
 # teste_delete()
 # teste_ler()

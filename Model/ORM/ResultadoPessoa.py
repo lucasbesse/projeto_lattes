@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
 from Model.ORM.Pessoa import Pessoa
@@ -12,9 +11,7 @@ class ResultadoPessoa(Base):
     __tablename__ = 'resultado_pessoa'
 
     codigo = Column(Integer, primary_key=True, autoincrement=True)
-    # pessoa = relationship(Pessoa, back_populates='resultado_pessoa_rel')
     pessoa_codigo = Column(Integer, ForeignKey(Pessoa.codigo))
-    # resultado = relationship(Resultado, back_populates='resultado_pessoa_rel')
     resultado_codigo = Column(Integer, ForeignKey(Resultado.codigo))
     tipo = Column(String)
 

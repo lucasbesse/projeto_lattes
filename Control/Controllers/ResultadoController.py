@@ -4,6 +4,8 @@ from flask import jsonify
 from flask import make_response
 
 from Model.Schemas.PessoaSchema import PessoaSchema
+from Model.Schemas.ProjetoPessoaSchemaRead import ProjetoPessoaSchemaRead
+from Model.Schemas.ProjetoSchema import ProjetoSchema
 from Model.Schemas.ResultadoPessoaSchemaRead import ResultadoPessoaSchemaRead
 from Model.Schemas.ResultadoSchema import ResultadoSchema
 from Model.Schemas.ResultadoUpdateSchema import ResultadoUpdateSchema
@@ -17,7 +19,10 @@ class ResultadoController:
                  resultado_delete_bo,
                  resultado_pessoa_create_bo,
                  resultado_pessoa_read_bo,
-                 read_pessoa_codigo_bo):
+                 pessoa_read_codigo_bo,
+                 projeto_read_codigo_bo,
+                 projeto_pessoa_read_bo):
+
         self.resultado_create_bo = resultado_create_bo
         self.resultado_read_codigo_bo = resultado_read_codigo_bo
         self.resultado_read_pagina_bo = resultado_read_pagina_bo
@@ -25,20 +30,26 @@ class ResultadoController:
         self.resultado_delete_bo = resultado_delete_bo
         self.resultado_pessoa_create_bo = resultado_pessoa_create_bo
         self.resultado_pessoa_read_bo = resultado_pessoa_read_bo
-        self.read_pessoa_codigo_bo = read_pessoa_codigo_bo
+        self.pessoa_read_codigo_bo = pessoa_read_codigo_bo
+        self.projeto_read_codigo_bo = projeto_read_codigo_bo
+        self.projeto_pessoa_read_bo = projeto_pessoa_read_bo
 
         self.resultado_schema = ResultadoSchema()
         self.resultado_update_schema = ResultadoUpdateSchema()
         self.resultado_pessoa_schema_read = ResultadoPessoaSchemaRead()
         self.pessoa_schema = PessoaSchema()
 
+        self.projeto_schema = ProjetoSchema()
+
+        self.projeto_pessoa_schema_read = ProjetoPessoaSchemaRead()
+
     def criar_resultado(self, json_data):
         json_data = json.loads(json_data)
         if not json_data:
-            print('nao tem json')
+
             response = make_response(jsonify({'error': 'Dados JSON ausentes'}), 400)
             return response
-        print('tem json')
+
         # Validar campos obrigatórios
         pessoas = json_data.pop("pessoas") if "pessoas" in json_data else None
         errors = self.resultado_schema.validate(json_data)
@@ -69,19 +80,43 @@ class ResultadoController:
 
             resultado_json['pessoas'] = []
 
-            list_resultado_pessoa = self.resultado_pessoa_read_bo.execute(codigo)
+            list_resultado_pessoa = self.resultado_pessoa_read_bo.execute(resultado.codigo)
             if list_resultado_pessoa:
                 list_resultado_pessoa_json = self.resultado_pessoa_schema_read.dump(list_resultado_pessoa, many=True)
-                print(list_resultado_pessoa_json)
                 pessoas_list = []
                 for resultado_pessoa in list_resultado_pessoa_json:
-                    pessoa = self.read_pessoa_codigo_bo.execute(resultado_pessoa['pessoa_codigo'])
+                    pessoa = self.pessoa_read_codigo_bo.execute(resultado_pessoa['pessoa_codigo'])
                     pessoa_json = self.pessoa_schema.dump(pessoa)
                     resultado_pessoa['pessoa'] = pessoa_json
                     resultado_pessoa.pop('pessoa_codigo')
                     pessoas_list.append(resultado_pessoa)
 
                 resultado_json['pessoas'] = pessoas_list
+
+            resultado_json['projeto'] = None
+            projeto = self.projeto_read_codigo_bo.execute(resultado.projeto_codigo)
+            if projeto:
+                projeto_json = self.projeto_schema.dump(projeto)
+                projeto_json['pessoas'] = []
+
+                list_projeto_pessoa = self.projeto_pessoa_read_bo.execute(codigo)
+                if list_projeto_pessoa:
+                    list_projeto_pessoa_json = self.projeto_pessoa_schema_read.dump(list_projeto_pessoa, many=True)
+
+                    pessoas_list = []
+                    for projeto_pessoa in list_projeto_pessoa_json:
+                        pessoa = self.pessoa_read_codigo_bo.execute(projeto_pessoa['pessoa_codigo'])
+                        pessoa_json = self.pessoa_schema.dump(pessoa)
+                        projeto_pessoa['pessoa'] = pessoa_json
+                        projeto_pessoa.pop('pessoa_codigo')
+                        pessoas_list.append(projeto_pessoa)
+
+                    projeto_json['pessoas'] = pessoas_list
+
+                resultado_json['projeto'] = projeto_json
+
+            resultado_json.pop('projeto_codigo')
+
 
             return jsonify(resultado_json), 200
         else:
@@ -102,16 +137,40 @@ class ResultadoController:
                 list_resultado_pessoa = self.resultado_pessoa_read_bo.execute(resultado_json['codigo'])
                 if list_resultado_pessoa:
                     list_resultado_pessoa_json = self.resultado_pessoa_schema_read.dump(list_resultado_pessoa, many=True)
-                    print(list_resultado_pessoa_json)
+
                     pessoas_list = []
                     for resultado_pessoa in list_resultado_pessoa_json:
-                        pessoa = self.read_pessoa_codigo_bo.execute(resultado_pessoa['pessoa_codigo'])
+                        pessoa = self.pessoa_read_codigo_bo.execute(resultado_pessoa['pessoa_codigo'])
                         pessoa_json = self.pessoa_schema.dump(pessoa)
                         resultado_pessoa['pessoa'] = pessoa_json
                         resultado_pessoa.pop('pessoa_codigo')
                         pessoas_list.append(resultado_pessoa)
 
                     resultado_json['pessoas'] = pessoas_list
+
+                resultado_json['projeto'] = None
+                projeto = self.projeto_read_codigo_bo.execute(resultado_json['projeto_codigo'])
+                if projeto:
+                    projeto_json = self.projeto_schema.dump(projeto)
+                    projeto_json['pessoas'] = []
+
+                    list_projeto_pessoa = self.projeto_pessoa_read_bo.execute(projeto.codigo)
+                    if list_projeto_pessoa:
+                        list_projeto_pessoa_json = self.projeto_pessoa_schema_read.dump(list_projeto_pessoa, many=True)
+
+                        pessoas_list = []
+                        for projeto_pessoa in list_projeto_pessoa_json:
+                            pessoa = self.pessoa_read_codigo_bo.execute(projeto_pessoa['pessoa_codigo'])
+                            pessoa_json = self.pessoa_schema.dump(pessoa)
+                            projeto_pessoa['pessoa'] = pessoa_json
+                            projeto_pessoa.pop('pessoa_codigo')
+                            pessoas_list.append(projeto_pessoa)
+
+                        projeto_json['pessoas'] = pessoas_list
+
+                    resultado_json['projeto'] = projeto_json
+
+                resultado_json.pop('projeto_codigo')
 
         response = make_response(jsonify(resultados_json), 200)
         response.headers['Access-Control-Allow-Origin'] = '*'
@@ -131,9 +190,9 @@ class ResultadoController:
 
         # Executar ação do Business Object
         try:
-            # print(json_data)
+
             resultado = self.resultado_update_schema.load(json_data)
-            print(type(resultado),resultado)
+
             success = self.resultado_update_bo.execute(codigo, resultado)
 
             if pessoas:

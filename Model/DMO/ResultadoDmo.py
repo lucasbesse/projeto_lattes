@@ -1,3 +1,4 @@
+from Model.ORM.Projeto import Projeto
 from Model.ORM.Resultado import Resultado
 
 
@@ -31,24 +32,26 @@ class ResultadoDmo:
             return True
         return False
 
-    def update(self, resultado_codigo, titulo="", descricao="", tipo="", autores="", colaboradores="", projeto="", codigo=""):
+    def update(self, resultado_codigo, titulo="", descricao="", tipo="", projeto_codigo="", codigo=""):
         resultado = self.banco.session.query(Resultado).get(resultado_codigo)
         if resultado:
             if titulo:
-                resultado.set_titulo(titulo)
+                resultado.titulo = titulo
             if descricao:
-                resultado.set_descricao(descricao)
+                resultado.descricao = descricao
             if tipo:
-                resultado.set_tipo(tipo)
-            if autores:
-                resultado.set_autores(autores)
-            if colaboradores:
-                resultado.set_colaboradores(colaboradores)
-            if projeto:
-                resultado.set_projeto(projeto)
+                resultado.tipo = tipo
+            if projeto_codigo:
+                resultado.projeto_codigo = projeto_codigo
             if codigo:
-                resultado.set_codigo(codigo)
+                resultado.codigo = codigo
 
             self.banco.session.commit()
             return True
         return False
+
+    def read_projeto_resultado(self, projeto_codigo):
+        resultados = self.banco.session.query(Resultado).filter(
+            Projeto.codigo == projeto_codigo).all()
+
+        return resultados

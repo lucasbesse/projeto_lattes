@@ -8,4 +8,5 @@ app.register_blueprint(ProjetoRoutes.projeto_routes_bp)
 app.register_blueprint(ResultadoRoutes.resultado_routes_bp)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # app.run(debug=True)
+    app.run()

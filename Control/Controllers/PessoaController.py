@@ -23,12 +23,9 @@ class PessoaController:
         self.pessoa_update_schema = PessoaUpdateSchema()
 
     def criar_pessoa(self, json_data):
-        print(type(json.loads(json_data)))
         if not json_data:
-            print('nao tem json')
             response = make_response(jsonify({'error': 'Dados JSON ausentes'}), 400)
             return response
-        print('tem json')
         # Validar campos obrigatórios
         errors = self.pessoa_schema.validate(json.loads(json_data))
 
@@ -80,9 +77,8 @@ class PessoaController:
 
         # Executar ação do Business Object
         try:
-            # print(json_data)
+
             pessoa = self.pessoa_update_schema.load(json.loads(json_data))
-            print(type(pessoa),pessoa)
             success = self.pessoa_update_bo.execute(codigo, pessoa)
             if success:
                 return jsonify({'success': 'Pessoa atualizada com sucesso'}), 200
