@@ -1,6 +1,7 @@
 import json
 import requests
 
+
 def teste_criar():
     print('======= CREATE =========')
     # Endpoint para criar uma projeto
@@ -31,7 +32,7 @@ def teste_criar():
     print(type(data_criar_projeto), data_criar_projeto)
     response = requests.post(url_criar_projeto, json=data_criar_projeto)
     print(response.status_code)
-    print(json.dumps(response.json(),indent=4))
+    print(json.dumps(response.json(), indent=4))
 
 
 def teste_ler_codigo():
@@ -41,7 +42,7 @@ def teste_ler_codigo():
     url_ler_projeto_codigo = f'http://localhost:5000/projetos/{codigo}'
     response = requests.get(url_ler_projeto_codigo)
     print(response.status_code)
-    print(json.dumps(response.json(),indent=4))
+    print(json.dumps(response.json(), indent=4))
 
 
 def teste_ler():
@@ -50,7 +51,7 @@ def teste_ler():
     url_ler_projeto_pagina = 'http://localhost:5000/projetos?limit=10&offset=0'
     response = requests.get(url_ler_projeto_pagina)
     print(response.status_code)
-    print(json.dumps(response.json(),indent=4))
+    print(json.dumps(response.json(), indent=4))
 
 
 def teste_atualiza():
@@ -64,7 +65,7 @@ def teste_atualiza():
     data_atualizar_projeto = {"pessoas": [{'codigo': 1, 'tipo': 'b'}]}
     response = requests.put(url_atualizar_projeto, json=data_atualizar_projeto)
     print(response.status_code)
-    print(json.dumps(response.json(),indent=4))
+    print(json.dumps(response.json(), indent=4))
 
 
 def teste_delete():
@@ -74,7 +75,7 @@ def teste_delete():
     url_deletar_projeto = f'http://127.0.0.1:5000/projetos/{codigo}'
     response = requests.delete(url_deletar_projeto)
     print(response.status_code)
-    print(json.dumps(response.json(),indent=4))
+    print(json.dumps(response.json(), indent=4))
 
 
 # teste_criar()

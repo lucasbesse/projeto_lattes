@@ -4,7 +4,6 @@ from flask import jsonify
 from flask import make_response
 
 from Model.Schemas.PessoaSchema import PessoaSchema
-from Model.Schemas.ProjetoPessoaSchema import ProjetoPessoaSchema
 from Model.Schemas.ProjetoPessoaSchemaRead import ProjetoPessoaSchemaRead
 from Model.Schemas.ProjetoSchema import ProjetoSchema
 from Model.Schemas.ProjetoUpdateSchema import ProjetoUpdateSchema

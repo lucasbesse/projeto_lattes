@@ -3,6 +3,8 @@ import json
 from flask import jsonify
 from flask import make_response
 
+from Model.Schemas.PessoaSchema import PessoaSchema
+from Model.Schemas.ResultadoPessoaSchemaRead import ResultadoPessoaSchemaRead
 from Model.Schemas.ResultadoSchema import ResultadoSchema
 from Model.Schemas.ResultadoUpdateSchema import ResultadoUpdateSchema
 
@@ -12,25 +14,34 @@ class ResultadoController:
                  resultado_read_codigo_bo,
                  resultado_read_pagina_bo,
                  resultado_update_bo,
-                 resultado_delete_bo):
+                 resultado_delete_bo,
+                 resultado_pessoa_create_bo,
+                 resultado_pessoa_read_bo,
+                 read_pessoa_codigo_bo):
         self.resultado_create_bo = resultado_create_bo
         self.resultado_read_codigo_bo = resultado_read_codigo_bo
         self.resultado_read_pagina_bo = resultado_read_pagina_bo
         self.resultado_update_bo = resultado_update_bo
         self.resultado_delete_bo = resultado_delete_bo
+        self.resultado_pessoa_create_bo = resultado_pessoa_create_bo
+        self.resultado_pessoa_read_bo = resultado_pessoa_read_bo
+        self.read_pessoa_codigo_bo = read_pessoa_codigo_bo
 
         self.resultado_schema = ResultadoSchema()
         self.resultado_update_schema = ResultadoUpdateSchema()
+        self.resultado_pessoa_schema_read = ResultadoPessoaSchemaRead()
+        self.pessoa_schema = PessoaSchema()
 
     def criar_resultado(self, json_data):
-        print(type(json.loads(json_data)))
+        json_data = json.loads(json_data)
         if not json_data:
             print('nao tem json')
             response = make_response(jsonify({'error': 'Dados JSON ausentes'}), 400)
             return response
         print('tem json')
         # Validar campos obrigatórios
-        errors = self.resultado_schema.validate(json.loads(json_data))
+        pessoas = json_data.pop("pessoas") if "pessoas" in json_data else None
+        errors = self.resultado_schema.validate(json_data)
 
         if errors:
             response = make_response(jsonify({'error': errors}), 400)
@@ -38,8 +49,11 @@ class ResultadoController:
 
         # Executar ação do Business Object
         try:
-            resultado = self.resultado_schema.load(json.loads(json_data))
+            resultado = self.resultado_schema.load(json_data)
             resultado_id = self.resultado_create_bo.execute(resultado)
+
+            if pessoas:
+                self.resultado_pessoa_create_bo.execute(resultado_id, pessoas)
 
             response = make_response(jsonify({'success': 'Resultado criada com sucesso', 'id': resultado_id}), 201)
             response.headers['Access-Control-Allow-Origin'] = '*'
@@ -52,6 +66,23 @@ class ResultadoController:
         resultado = self.resultado_read_codigo_bo.execute(codigo)
         if resultado:
             resultado_json = self.resultado_schema.dump(resultado)
+
+            resultado_json['pessoas'] = []
+
+            list_resultado_pessoa = self.resultado_pessoa_read_bo.execute(codigo)
+            if list_resultado_pessoa:
+                list_resultado_pessoa_json = self.resultado_pessoa_schema_read.dump(list_resultado_pessoa, many=True)
+                print(list_resultado_pessoa_json)
+                pessoas_list = []
+                for resultado_pessoa in list_resultado_pessoa_json:
+                    pessoa = self.read_pessoa_codigo_bo.execute(resultado_pessoa['pessoa_codigo'])
+                    pessoa_json = self.pessoa_schema.dump(pessoa)
+                    resultado_pessoa['pessoa'] = pessoa_json
+                    resultado_pessoa.pop('pessoa_codigo')
+                    pessoas_list.append(resultado_pessoa)
+
+                resultado_json['pessoas'] = pessoas_list
+
             return jsonify(resultado_json), 200
         else:
             return jsonify({'error': 'Resultado não encontrada'}), 404
@@ -63,6 +94,24 @@ class ResultadoController:
 
         resultados = self.resultado_read_pagina_bo.execute(limit, offset)
         resultados_json = self.resultado_schema.dump(resultados, many=True)
+        if resultados:
+
+            for resultado_json in resultados_json:
+                resultado_json['pessoas'] = []
+
+                list_resultado_pessoa = self.resultado_pessoa_read_bo.execute(resultado_json['codigo'])
+                if list_resultado_pessoa:
+                    list_resultado_pessoa_json = self.resultado_pessoa_schema_read.dump(list_resultado_pessoa, many=True)
+                    print(list_resultado_pessoa_json)
+                    pessoas_list = []
+                    for resultado_pessoa in list_resultado_pessoa_json:
+                        pessoa = self.read_pessoa_codigo_bo.execute(resultado_pessoa['pessoa_codigo'])
+                        pessoa_json = self.pessoa_schema.dump(pessoa)
+                        resultado_pessoa['pessoa'] = pessoa_json
+                        resultado_pessoa.pop('pessoa_codigo')
+                        pessoas_list.append(resultado_pessoa)
+
+                    resultado_json['pessoas'] = pessoas_list
 
         response = make_response(jsonify(resultados_json), 200)
         response.headers['Access-Control-Allow-Origin'] = '*'
@@ -73,17 +122,23 @@ class ResultadoController:
         if not json_data:
             return jsonify({'error': 'Dados JSON ausentes'}), 400
 
+        json_data = json.loads(json_data)
         # Validar campos obrigatórios
-        errors = self.resultado_update_schema.validate(json.loads(json_data))
+        pessoas = json_data.pop("pessoas") if "pessoas" in json_data else None
+        errors = self.resultado_update_schema.validate(json_data)
         if errors:
             return jsonify({'error': errors}), 400
 
         # Executar ação do Business Object
         try:
             # print(json_data)
-            resultado = self.resultado_update_schema.load(json.loads(json_data))
+            resultado = self.resultado_update_schema.load(json_data)
             print(type(resultado),resultado)
             success = self.resultado_update_bo.execute(codigo, resultado)
+
+            if pessoas:
+                self.resultado_pessoa_create_bo.execute(codigo, pessoas)
+
             if success:
                 return jsonify({'success': 'Resultado atualizada com sucesso'}), 200
             else:

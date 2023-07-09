@@ -6,6 +6,3 @@ class ResultadoSchema(Schema):
     titulo = fields.Str(required=True)
     descricao = fields.Str(required=True)
     tipo = fields.Str(required=False)
-    autores = fields.Str(required=False)
-    colaboradores = fields.Str(required=False)
-    projeto = fields.Str(required=False)
