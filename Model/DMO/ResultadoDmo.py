@@ -52,6 +52,8 @@ class ResultadoDmo:
 
     def read_projeto_resultado(self, projeto_codigo):
         resultados = self.banco.session.query(Resultado).filter(
-            Projeto.codigo == projeto_codigo).all()
+            Resultado.projeto_codigo == projeto_codigo).all()
+
+        print(resultados)
 
         return resultados

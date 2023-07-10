@@ -79,7 +79,7 @@ def teste_delete():
 
 # teste_criar()
 # teste_ler_codigo()
-teste_atualiza()
+# teste_atualiza()
 # teste_ler_codigo()
 # teste_delete()
-# teste_ler()
+teste_ler()
