@@ -157,8 +157,7 @@ class ProjetoController:
             projeto = self.projeto_update_schema.load(json_data)
             success = self.projeto_update_bo.execute(codigo, projeto)
 
-            if pessoas:
-                self.projeto_pessoa_create_bo.execute(codigo, pessoas)
+            self.projeto_pessoa_create_bo.execute(codigo, pessoas)
 
             if success:
                 return jsonify({'success': 'Projeto atualizada com sucesso'}), 200

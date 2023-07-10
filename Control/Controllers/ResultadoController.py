@@ -195,8 +195,7 @@ class ResultadoController:
 
             success = self.resultado_update_bo.execute(codigo, resultado)
 
-            if pessoas:
-                self.resultado_pessoa_create_bo.execute(codigo, pessoas)
+            self.resultado_pessoa_create_bo.execute(codigo, pessoas)
 
             if success:
                 return jsonify({'success': 'Resultado atualizada com sucesso'}), 200

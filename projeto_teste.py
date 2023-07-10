@@ -56,12 +56,12 @@ def teste_ler():
 def teste_atualiza():
     print('======= UPDATE =========')
     # Endpoint para atualizar uma projeto
-    codigo = 1
+    codigo = 24
     url_atualizar_projeto = f'http://localhost:5000/projetos/{codigo}'
     # data_atualizar_projeto = {"pessoas": [{'codigo': 1, 'tipo': 'a'},
     #                                       {'codigo': 2, 'tipo': 'a'},
     #                                       {'codigo': 3, 'tipo': 'a'}]}
-    data_atualizar_projeto = {"pessoas": [{'codigo': 1, 'tipo': 'b'}]}
+    data_atualizar_projeto = {"pessoas": []}
     response = requests.put(url_atualizar_projeto, json=data_atualizar_projeto)
     print(response.status_code)
     print(json.dumps(response.json(), indent=4))
@@ -77,9 +77,9 @@ def teste_delete():
     print(json.dumps(response.json(), indent=4))
 
 
-teste_criar()
+# teste_criar()
 # teste_ler_codigo()
-# teste_atualiza()
+teste_atualiza()
 # teste_ler_codigo()
 # teste_delete()
 # teste_ler()
