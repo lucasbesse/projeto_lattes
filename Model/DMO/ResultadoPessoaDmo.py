@@ -19,6 +19,13 @@ class ResultadoPessoaDmo:
             return resultado_pessoa
         return False
 
+    def read_resultado_pessoa_p_id(self, pessoa_id):
+        resultado_pessoa = self.banco.session.query(ResultadoPessoa).filter(
+            ResultadoPessoa.pessoa_codigo == pessoa_id).all()
+        if resultado_pessoa:
+            return resultado_pessoa
+        return False
+
     def remove(self, codigo_resultado):
         self.banco.engine.execute(f'delete from resultado_pessoa where resultado_codigo = {codigo_resultado}')
         self.banco.session.commit()

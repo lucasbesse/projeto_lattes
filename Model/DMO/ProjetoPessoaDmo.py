@@ -19,6 +19,13 @@ class ProjetoPessoaDmo:
             return projeto_pessoa
         return False
 
+    def read_projeto_pessoa_p_id(self, pessoa_id):
+        projeto_pessoa = self.banco.session.query(ProjetoPessoa).filter(
+            ProjetoPessoa.pessoa_codigo == pessoa_id).all()
+        if projeto_pessoa:
+            return projeto_pessoa
+        return False
+
     def remove(self, codigo_projeto):
         self.banco.engine.execute(f'delete from projeto_pessoa where projeto_codigo = {codigo_projeto}')
         self.banco.session.commit()
