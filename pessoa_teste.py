@@ -1,3 +1,5 @@
+import json
+
 import requests
 
 
@@ -45,7 +47,7 @@ def teste_ler():
     url_ler_pessoa_pagina = 'http://localhost:5000/pessoas?limit=10&offset=0'
     response = requests.get(url_ler_pessoa_pagina)
     print(response.status_code)
-    print(response.json())
+    print(json.dumps(response.json(),indent=4))
 
 
 def teste_atualiza():
@@ -73,7 +75,7 @@ def teste_delete():
     print(response.json())
 
 
-teste_criar()
+# teste_criar()
 # teste_ler_codigo()
 # teste_atualiza()
 # teste_ler_codigo()

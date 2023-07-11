@@ -1,4 +1,3 @@
-from Model.ORM.Projeto import Projeto
 from Model.ORM.Resultado import Resultado
 
 
@@ -32,7 +31,7 @@ class ResultadoDmo:
             return True
         return False
 
-    def update(self, resultado_codigo, titulo="", descricao="", tipo="", projeto_codigo="", codigo=""):
+    def update(self, resultado_codigo, titulo="", descricao="", tipo="", projeto_codigo="", codigo="", data_publicacao=""):
         resultado = self.banco.session.query(Resultado).get(resultado_codigo)
         if resultado:
             if titulo:
@@ -45,6 +44,8 @@ class ResultadoDmo:
                 resultado.projeto_codigo = projeto_codigo
             if codigo:
                 resultado.codigo = codigo
+            if data_publicacao:
+                resultado.data_publicacao = data_publicacao
 
             self.banco.session.commit()
             return True

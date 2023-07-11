@@ -3,6 +3,6 @@ class ProjetoPessoaReadPIdBo:
         self.projeto_pessoa_dmo = projeto_pessoa_dmo
 
     def execute(self, pessoa_codigo):
-        pessoa_projeto_list = self.projeto_pessoa_dmo.read_projeto_pessoa(pessoa_codigo)
+        pessoa_projeto_list = self.projeto_pessoa_dmo.read_projeto_pessoa_p_id(pessoa_codigo)
 
         return pessoa_projeto_list

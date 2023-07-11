@@ -13,13 +13,15 @@ class Resultado(Base):
     titulo = Column(String)
     descricao = Column(Text)
     tipo = Column(String)
+    data_publicacao = Column(String)
     projeto_codigo = Column(Integer, ForeignKey(Projeto.codigo))
 
-    def __init__(self, titulo=None, descricao=None, tipo=None, projeto_codigo=None):
+    def __init__(self, titulo=None, descricao=None, tipo=None, projeto_codigo=None, data_publicacao=None):
         self.titulo = titulo
         self.descricao = descricao
         self.tipo = tipo
         self.projeto_codigo = projeto_codigo
+        self.data_publicacao = data_publicacao
         self.codigo = None
 
     def __str__(self):

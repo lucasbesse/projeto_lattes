@@ -142,6 +142,7 @@ class ProjetoController:
         if not json_data:
             return jsonify({'error': 'Dados JSON ausentes'}), 400
 
+        print("No controller:",json_data)
         # pessoas
         json_data = json.loads(json_data)
         pessoas = json_data.pop("pessoas") if "pessoas" in json_data else None
@@ -155,9 +156,14 @@ class ProjetoController:
         try:
 
             projeto = self.projeto_update_schema.load(json_data)
+            print("No controller", projeto)
+
             success = self.projeto_update_bo.execute(codigo, projeto)
 
-            self.projeto_pessoa_create_bo.execute(codigo, pessoas)
+            try:
+                self.projeto_pessoa_create_bo.execute(codigo, pessoas)
+            except Exception as e:
+                pass
 
             if success:
                 return jsonify({'success': 'Projeto atualizada com sucesso'}), 200

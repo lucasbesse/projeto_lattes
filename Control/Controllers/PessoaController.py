@@ -84,7 +84,7 @@ class PessoaController:
             list_projeto_pessoa = self.projeto_pessoa_read_p_id_bo.execute(pessoa_json['codigo'])
             if list_projeto_pessoa:
                 list_projeto_pessoa_json = self.projeto_pessoa_schema_read.dump(list_projeto_pessoa, many=True)
-
+                print("entrou")
                 projetos_list = []
                 for projeto_pessoa in list_projeto_pessoa_json:
                     projeto = self.projeto_read_codigo_bo.execute(projeto_pessoa['projeto_codigo'])

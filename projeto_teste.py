@@ -22,10 +22,14 @@ def teste_criar():
     #     'email': 'abcd@email.com',
     #     'experiencia': 'nenhuma'
     # }
-    data_criar_projeto = {"titulo": "João",
+    data_criar_projeto = {"titulo": "Projeto de teste 1",
+                          "descricao":"Projeto de teste",
                           "pessoas": [{'codigo': 1, 'tipo': 'i'},
                                       {'codigo': 2, 'tipo': 'i'},
-                                      {'codigo': 3, 'tipo': 'p'}]
+                                      {'codigo': 3, 'tipo': 'p'}],
+                          "data_inicio":"2023-10-01",
+                          "data_final":"2023-10-01",
+                          "palavras_chave":"#TECNOLOGIA; #DESENVOLVIMENTO; #ADS"
                           }
     # data_criar_projeto = json.dumps(data_criar_projeto)
     print(type(data_criar_projeto), data_criar_projeto)
@@ -56,12 +60,12 @@ def teste_ler():
 def teste_atualiza():
     print('======= UPDATE =========')
     # Endpoint para atualizar uma projeto
-    codigo = 24
+    codigo = 28
     url_atualizar_projeto = f'http://localhost:5000/projetos/{codigo}'
     # data_atualizar_projeto = {"pessoas": [{'codigo': 1, 'tipo': 'a'},
     #                                       {'codigo': 2, 'tipo': 'a'},
     #                                       {'codigo': 3, 'tipo': 'a'}]}
-    data_atualizar_projeto = {"pessoas": []}
+    data_atualizar_projeto = {"data_final":"2023-10-07"}
     response = requests.put(url_atualizar_projeto, json=data_atualizar_projeto)
     print(response.status_code)
     print(json.dumps(response.json(), indent=4))
@@ -79,7 +83,7 @@ def teste_delete():
 
 # teste_criar()
 # teste_ler_codigo()
-# teste_atualiza()
+teste_atualiza()
 # teste_ler_codigo()
 # teste_delete()
 teste_ler()

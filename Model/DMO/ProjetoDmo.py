@@ -31,7 +31,8 @@ class ProjetoDmo:
             return True
         return False
 
-    def update(self, projeto_codigo, codigo="", titulo="", descricao="", integrantes="", pesquisadores="", resultado=""):
+    def update(self, projeto_codigo, codigo="", titulo="", descricao="", integrantes="", pesquisadores="", resultado="", data_inicio="", data_final="", palavras_chave=""):
+
         projeto = self.banco.session.query(Projeto).get(projeto_codigo)
         if projeto:
             if codigo:
@@ -46,6 +47,12 @@ class ProjetoDmo:
                 projeto.pesquisadores = pesquisadores
             if resultado:
                 projeto.resultado = resultado
+            if data_inicio:
+                projeto.data_inicio = data_inicio
+            if data_final:
+                projeto.data_final = data_final
+            if palavras_chave:
+                projeto.palavras_chave = palavras_chave
 
             self.banco.session.commit()
             return True

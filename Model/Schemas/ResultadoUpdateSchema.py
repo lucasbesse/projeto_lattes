@@ -6,3 +6,4 @@ class ResultadoUpdateSchema(Schema):
     descricao = fields.Str(required=False)
     tipo = fields.Str(required=False)
     projeto_codigo = fields.Int(required=False)
+    data_publicacao = fields.Str(required=False)
